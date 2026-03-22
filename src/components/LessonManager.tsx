@@ -70,7 +70,7 @@ export default function LessonManager({ courseId, initialLessons }: { courseId: 
                   <h3 className="text-white font-medium truncate flex items-center gap-2">
                     {lesson.title}
                     {lesson.showEditor && (
-                      <Code className="w-4 h-4 text-blue-500 shrink-0" title="Editor activado" />
+                      <Code size={16} className="text-blue-400 shrink-0" aria-label="Editor activado" />
                     )}
                   </h3>
                 </div>
