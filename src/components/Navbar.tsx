@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth, signOut } from "@/auth";
+import ProfileModal from "@/components/ProfileModal"; // <-- IMPORTAMOS EL MODAL
 
 export default async function Navbar() {
   // Leemos la sesión actual del usuario
@@ -30,10 +31,18 @@ export default async function Navbar() {
         </div>
 
         <div className="flex items-center space-x-4">
-          {session ? (
+          {session?.user ? (
             // SI ESTÁ LOGUEADO
-            <div className="flex items-center space-x-4 text-sm font-medium">
-              <span className="text-zinc-500">Hola, <span className="text-zinc-300">{session.user.name}</span></span>
+            <div className="flex items-center space-x-2 text-sm font-medium">
+              <span className="text-zinc-500 mr-2">
+                Hola, <span className="text-zinc-300">{session.user.name}</span>
+              </span>
+              
+              {/* AQUÍ INYECTAMOS EL MODAL FLOTANTE */}
+              <ProfileModal 
+                initialName={session.user.name || ""} 
+                email={session.user.email || ""} 
+              />
               
               <form action={async () => {
                 "use server";

@@ -43,6 +43,11 @@ model Lesson {
   title        String
   content      String         @db.Text
   order        Int            // Fundamental para el bloqueo lineal (1, 2, 3...)
+  
+  // --- NUEVOS CAMPOS PARA EL EDITOR INTERACTIVO ---
+  sandboxId    String?        // ID del proyecto en StackBlitz (ej: "vitejs-vite-xx")
+  showEditor   Boolean        @default(false) // Interruptor para encender el editor
+  
   courseId     String
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   userProgress UserProgress[]

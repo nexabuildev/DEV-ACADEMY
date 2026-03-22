@@ -11,9 +11,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Añadimos suppressHydrationWarning al html y al body
   return (
-    <html lang="es">
-      <body className="bg-black text-white font-mono antialiased">
+    <html lang="es" suppressHydrationWarning>
+      <body className="bg-black text-white font-mono antialiased" suppressHydrationWarning>
         {/* El Navbar fijo arriba */}
         <Navbar />
         

@@ -4,6 +4,8 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, Lock, PlayCircle } from "lucide-react"; 
 import EnrollButton from "@/components/EnrollButton";
+// 1. IMPORTAMOS TU NUEVA BARRA DE PROGRESO
+import CourseProgress from "@/components/CourseProgress"; 
 
 export default async function CoursePage(props: { params: Promise<{ slug: string }> }) {
   const { slug } = await props.params;
@@ -48,6 +50,13 @@ export default async function CoursePage(props: { params: Promise<{ slug: string
     .filter(p => p.isCompleted)
     .map(p => p.lessonId);
 
+  // 5. NUEVO: CALCULAMOS EL PORCENTAJE MATEMÁTICAMENTE
+  const totalLessons = course.lessons.length;
+  const completedLessonsCount = completedIds.length;
+  const progressPercentage = totalLessons === 0 
+    ? 0 
+    : (completedLessonsCount / totalLessons) * 100;
+
   return (
     <div className="max-w-5xl mx-auto py-12 px-6">
       <Link href="/cursos" className="text-zinc-500 hover:text-white mb-8 inline-block font-mono text-sm transition-colors">
@@ -61,6 +70,13 @@ export default async function CoursePage(props: { params: Promise<{ slug: string
         <p className="text-xl text-zinc-400 mb-8 leading-relaxed">
           {course.description}
         </p>
+
+        {/* 6. NUEVO: MOSTRAMOS LA BARRA SOLO SI ESTÁ INSCRITO */}
+        {enrollment && (
+          <div className="mb-10 p-6 bg-zinc-800/30 border border-zinc-700/50 rounded-2xl">
+            <CourseProgress value={progressPercentage} label="Progreso del curso" />
+          </div>
+        )}
 
         {!enrollment ? (
           <div className="mb-10">
