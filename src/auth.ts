@@ -4,11 +4,13 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { db } from "@/lib/db"
 import bcrypt from "bcryptjs"
 import { authConfig } from "./auth.config"
+import type { Adapter } from "next-auth/adapters" // Importamos el tipo base
 
-// Le decimos a TypeScript que nuestros usuarios y sesiones ahora tienen un 'role'
+// Le decimos a TypeScript que nuestros usuarios y sesiones ahora tienen un 'role' e 'id'
 declare module "next-auth" {
   interface Session {
     user: {
+      id: string; // Añadido id
       role: string;
     } & DefaultSession["user"]
   }
@@ -19,10 +21,10 @@ declare module "next-auth" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(db),
+  // EL CAMBIO ESTÁ AQUÍ: Añadimos "as Adapter" para evitar el error de Vercel
+  adapter: PrismaAdapter(db) as Adapter, 
   session: { strategy: "jwt" },
   
-  // AÑADIDO: Callbacks para pasar el rol de la base de datos a tu web
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -34,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token && session.user) {
         session.user.role = token.role as string;
-        session.user.id = token.id as string; // <--- ¡LA PIEZA QUE FALTABA!
+        session.user.id = token.id as string;
       }
       return session;
     }
@@ -61,7 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           user.password
         );
 
-        if (passwordsMatch) return user;
+        if (passwordsMatch) return user as any; // any temporal para evitar conflicto en authorize
         return null;
       }
     })
