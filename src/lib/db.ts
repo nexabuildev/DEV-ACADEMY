@@ -6,8 +6,8 @@ import { PrismaPg } from "@prisma/adapter-pg";
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
 
-// Le pasamos el pool al Adaptador de Prisma
-const adapter = new PrismaPg(pool);
+// CAMBIO AQUÍ: Añadimos "as any" para evitar el conflicto de tipos de Pool en Vercel
+const adapter = new PrismaPg(pool as any);
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
