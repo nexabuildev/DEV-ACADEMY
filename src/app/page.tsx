@@ -1,65 +1,68 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col min-h-screen">
+      
+      {/* SECCIÓN 1: Hero (La parte superior que se ve al entrar) */}
+      <section className="flex flex-col items-center justify-center min-h-[85vh] text-center px-4">
+        <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 mb-6">
+          Domina el Código.
+        </h1>
+        
+        <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-mono">
+          La academia definitiva para programadores. De cero a Senior construyendo proyectos reales, modernos y escalables.
+        </p>
+
+        {/* Único botón principal: Invita a la acción */}
+        <Link 
+          href="/cursos" 
+          className="bg-white text-black px-8 py-4 rounded-xl font-bold text-lg hover:scale-105 hover:bg-zinc-200 transition-all active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+        >
+          Explorar el Catálogo
+        </Link>
+      </section>
+
+      {/* SECCIÓN 2: Qué aprenderás (Haz scroll hacia abajo) */}
+      <section className="py-24 px-4 md:px-12 max-w-7xl mx-auto w-full border-t border-zinc-900">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">¿Qué vas a aprender?</h2>
+          <p className="text-zinc-400 font-mono text-sm md:text-base">El stack tecnológico elegido por las top startups.</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Grid de 3 columnas para las características */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          {/* Tarjeta 1 */}
+          <div className="bg-zinc-900/30 border border-zinc-800 p-8 rounded-2xl hover:border-blue-500/50 hover:bg-zinc-900/50 transition-all duration-300">
+            <div className="text-blue-400 text-4xl mb-6">⚛️</div>
+            <h3 className="text-xl font-bold text-zinc-100 mb-3">React 19 & Next.js 15</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Domina Server Components, Server Actions y el nuevo App Router. Construye aplicaciones ultrarrápidas y optimizadas para SEO sin dolores de cabeza.
+            </p>
+          </div>
+
+          {/* Tarjeta 2 */}
+          <div className="bg-zinc-900/30 border border-zinc-800 p-8 rounded-2xl hover:border-green-500/50 hover:bg-zinc-900/50 transition-all duration-300">
+            <div className="text-green-400 text-4xl mb-6">🗄️</div>
+            <h3 className="text-xl font-bold text-zinc-100 mb-3">Neon DB & Prisma ORM</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Aprende a diseñar bases de datos escalables con PostgreSQL. Olvídate del SQL complejo y maneja tus datos con la elegancia de Prisma.
+            </p>
+          </div>
+
+          {/* Tarjeta 3 */}
+          <div className="bg-zinc-900/30 border border-zinc-800 p-8 rounded-2xl hover:border-purple-500/50 hover:bg-zinc-900/50 transition-all duration-300">
+            <div className="text-purple-400 text-4xl mb-6">🔐</div>
+            <h3 className="text-xl font-bold text-zinc-100 mb-3">Seguridad & Auth.js</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Implementa sistemas de registro y login nivel bancario. Encriptación de contraseñas, protección de rutas y sesiones seguras.
+            </p>
+          </div>
+
         </div>
-      </main>
+      </section>
+
     </div>
   );
 }

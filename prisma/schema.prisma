@@ -1,0 +1,75 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 1. USUARIOS: Con soporte para Auth.js y Roles
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  password      String?
+  role          Role           @default(STUDENT)
+  enrollments   Enrollment[]   // Cursos en los que está inscrito
+  userProgress  UserProgress[] // Qué lecciones ha completado
+  createdAt     DateTime       @default(now())
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+// 2. CURSOS: El contenedor principal
+model Course {
+  id          String       @id @default(cuid())
+  title       String
+  slug        String       @unique
+  description String
+  published   Boolean      @default(false)
+  enrollments Enrollment[]
+  lessons     Lesson[]     // <--- Relación con las lecciones añadida
+  createdAt   DateTime     @default(now())
+}
+
+// 3. LECCIONES: Las unidades que llenan la barra de progreso
+model Lesson {
+  id           String         @id @default(cuid())
+  title        String
+  content      String         @db.Text
+  order        Int            // Fundamental para el bloqueo lineal (1, 2, 3...)
+  courseId     String
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userProgress UserProgress[]
+  createdAt    DateTime       @default(now())
+}
+
+// 4. INSCRIPCIONES: Une al Alumno con el Curso
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+// 5. PROGRESO: El motor de la barra 0-100% y el bloqueo
+model UserProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  lessonId    String
+  isCompleted Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, lessonId])
+}
