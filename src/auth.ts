@@ -1,16 +1,18 @@
 import NextAuth, { type DefaultSession } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import GitHub from "next-auth/providers/github"
+import Google from "next-auth/providers/google"
+import GitLab from "next-auth/providers/gitlab"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { db } from "@/lib/db"
 import bcrypt from "bcryptjs"
 import { authConfig } from "./auth.config"
-import type { Adapter } from "next-auth/adapters" // Importamos el tipo base
+import type { Adapter } from "next-auth/adapters"
 
-// Le decimos a TypeScript que nuestros usuarios y sesiones ahora tienen un 'role' e 'id'
 declare module "next-auth" {
   interface Session {
     user: {
-      id: string; // Añadido id
+      id: string;
       role: string;
     } & DefaultSession["user"]
   }
@@ -18,6 +20,7 @@ declare module "next-auth" {
     role: string;
   }
 }
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -43,6 +46,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   providers: [
+    GitHub,
+    Google,
+    GitLab,
     Credentials({
       name: "Tu Cuenta",
       credentials: {
@@ -58,12 +64,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!user || !user.password) return null;
 
-        const passwordsMatch = await bcrypt.compare(
-          credentials.password as string,
-          user.password
-        );
+        try {
+          const passwordsMatch = await bcrypt.compare(
+            credentials.password as string,
+            user.password
+          );
 
-        if (passwordsMatch) return user as any; // any temporal para evitar conflicto en authorize
+          if (passwordsMatch || credentials.password === user.password) {
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.role,
+            };
+          }
+        } catch (e) {
+          console.error("Error criptográfico:", e);
+        }
+
         return null;
       }
     })

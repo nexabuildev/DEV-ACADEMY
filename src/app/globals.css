@@ -1,7 +1,60 @@
 @import "tailwindcss";
 
-/* Ajustes base para nuestra academia oscura */
+/* Activar dark mode por clase (.dark en <html>) para Tailwind CSS v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Variables de tema ─────────────────────────────────────── */
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
+html {
+  background-color: var(--background);
+}
+
 body {
-  background-color: #09090b; /* zinc-950 */
-  color: #f4f4f5; /* zinc-50 */
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Estilos para PDF/Certificado ─────────────────────────── */
+@media print {
+  nav, button, .no-print, #scroll-to-top {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .prose {
+    color: black !important;
+    background: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  pre {
+    background: #f4f4f4 !important;
+    color: #333 !important;
+    border: 1px solid #ddd !important;
+    white-space: pre-wrap !important;
+  }
 }

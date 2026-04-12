@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Le dice a Next que esta variable es segura de usar en el servidor
   serverExternalPackages: ['@prisma/client'],
+  
+  // Tu versión de Next.js requiere que esto sea estrictamente experimental
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '20mb',
+    },
+  },
 };
 
 export default nextConfig;
