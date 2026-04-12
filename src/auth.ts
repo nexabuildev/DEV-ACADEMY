@@ -4,7 +4,7 @@ import GitHub from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import GitLab from "next-auth/providers/gitlab"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { db } from "@/lib/db"
+import { db } from "./lib/db"
 import bcrypt from "bcryptjs"
 import { authConfig } from "./auth.config"
 import type { Adapter } from "next-auth/adapters"
@@ -24,9 +24,9 @@ declare module "next-auth" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
-  // EL CAMBIO ESTÁ AQUÍ: Añadimos "as Adapter" para evitar el error de Vercel
-  adapter: PrismaAdapter(db) as Adapter, 
+  adapter: PrismaAdapter(db) as any, 
   session: { strategy: "jwt" },
+  secret: process.env.AUTH_SECRET,
   
   callbacks: {
     async jwt({ token, user }) {
