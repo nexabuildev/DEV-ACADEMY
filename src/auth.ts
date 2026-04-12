@@ -46,9 +46,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   providers: [
-    GitHub,
-    Google,
-    GitLab,
+    GitHub({ allowDangerousEmailAccountLinking: true }),
+    Google({ allowDangerousEmailAccountLinking: true }),
+    GitLab({ allowDangerousEmailAccountLinking: true }),
     Credentials({
       name: "Tu Cuenta",
       credentials: {
