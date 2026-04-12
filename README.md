@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 Dev Academy
 
-## Getting Started
+Dev Academy es una plataforma moderna de aprendizaje (LMS) diseñada para ofrecer una experiencia premium a estudiantes y administradores. Construida con las tecnologías más punteras de la web.
 
-First, run the development server:
+## 🚀 Tecnologías Principales
 
+- **Framework:** [Next.js 16 (App Router)](https://nextjs.org/) con arquitectura de servidor.
+- **Frontend:** [React 19](https://react.dev/) + [Tailwind CSS v4](https://tailwindcss.com/) para un diseño minimalista y ultra-rápido.
+- **Base de Datos:** [PostgreSQL (Neon)](https://neon.tech/) gestionado a través de [Prisma 7](https://www.prisma.io/).
+- **Autenticación:** [Auth.js v5 (NextAuth)](https://authjs.dev/) con soporte para:
+  - Email/Password (Local).
+  - Social Login (Google, GitHub, GitLab).
+- **Estilo:** Diseño con Micro-animaciones, soporte nativo de **Dark Mode** y estética minimalista premium.
+
+## ✨ Características Principales
+
+### 👨‍🎓 Para Alumno
+- **Dashboard Personalizado:** Seguimiento del progreso, cursos inscritos y logros.
+- **Comunidad:** Foro de dudas con soporte para hilos de comentarios anidados (replies).
+- **Perfil:** Gestión completa de datos personales y sincronización social automática.
+- **Lecciones:** Visor de lecciones optimizado para el aprendizaje sin distracciones.
+
+### 🔐 Administración
+- **Panel de Control:** Gestión de usuarios (estudiantes y administradores).
+- **Estado del Sistema:** Monitorización en tiempo real del estado de la plataforma y temas del sistema.
+- **Configuración:** Ajustes globales de la academia directamente desde la UI.
+
+---
+
+## 🛠️ Instalación y Configuración
+
+### 1. Clonar el repositorio
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/rubensimon1/dev-academy.git
+cd DevAcademy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar dependencias
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configurar Variables de Entorno
+Crea un archivo `.env` en la raíz (puedes usar `.env.example` como guía):
+```env
+# Database
+DATABASE_URL="tu_url_de_neon"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Auth.js
+AUTH_SECRET="un_valor_aleatorio_muy_largo"
+AUTH_URL="http://localhost:3000"
 
-## Learn More
+# Social IDs
+AUTH_GITHUB_ID="..."
+AUTH_GITHUB_SECRET="..."
+AUTH_GOOGLE_ID="..."
+AUTH_GOOGLE_SECRET="..."
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Preparar la Base de Datos
+```bash
+npx prisma db push
+npx prisma db seed
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Iniciar Desarrollo
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🌎 Despliegue (Vercel)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Sube el repositorio a GitHub.
+2. Conéctalo a **Vercel**.
+3. Asegúrate de añadir la URL de Vercel en los paneles de Google y GitHub (Redirect URIs).
+4. Configura las variables de entorno en el panel de Vercel (incluyendo `AUTH_TRUST_HOST=true`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📝 Usuario Administrador Inicial
+Para las pruebas de desarrollo, el sistema incluye un usuario administrador mediante el seed:
+- **Email:** `ruben@dev.com`
+- **Contraseña:** `1234`
+
+---
+
+Desarrollado con ❤️ para la comunidad de desarrolladores.
