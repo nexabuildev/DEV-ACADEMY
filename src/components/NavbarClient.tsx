@@ -172,11 +172,11 @@ export default function Navbar({
             <>
                <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-zinc-100 dark:bg-white/5 rounded-full flex items-center justify-center">
-                    <span className="text-zinc-900 dark:text-white font-bold uppercase">{session.user.name?.[0]}</span>
+                    <span className="text-zinc-900 dark:text-white font-bold uppercase">{session.user?.name?.[0]}</span>
                   </div>
                   <div>
-                    <p className="text-zinc-900 dark:text-white font-bold">{session.user.name}</p>
-                    <p className="text-xs text-zinc-500">{session.user.email}</p>
+                    <p className="text-zinc-900 dark:text-white font-bold">{session.user?.name}</p>
+                    <p className="text-xs text-zinc-500">{session.user?.email}</p>
                   </div>
                </div>
                <form action={signOutAction} className="mt-4">
