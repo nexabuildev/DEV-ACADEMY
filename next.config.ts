@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['@prisma/client'],
+  serverExternalPackages: ['@prisma/client', '.prisma/client', 'pg', 'pg-cloudflare'],
   
   // Tu versión de Next.js requiere que esto sea estrictamente experimental
   experimental: {
