@@ -42,9 +42,9 @@ export function getLevelProgress(xp: number) {
  * Devuelve el nombre del rango según el nivel.
  */
 export function getRankName(level: number) {
-  if (level < 5) return "Novato Coder";
-  if (level < 10) return "Junior Dev";
-  if (level < 20) return "Fullstack Warrior";
+  if (level < 5) return "Principiante";
+  if (level < 10) return "Desarrollador Junior";
+  if (level < 20) return "Desarrollador Fullstack";
   if (level < 40) return "Tech Lead";
-  return "Legendary Architect";
+  return "Arquitecto Senior";
 }
