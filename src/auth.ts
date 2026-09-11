@@ -22,17 +22,21 @@ declare module "next-auth" {
 }
 
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  ...authConfig,
-  adapter: PrismaAdapter(db) as any, 
+// Config como función ("lazy initialization"): en Cloudflare Workers `process.env`
+// solo está poblado dentro del manejador de la petición, así que todo lo que
+// dependa de variables de entorno (secret, providers) tiene que leerse aquí
+// dentro, no en un objeto construido al cargar el módulo.
+export const { handlers, signIn, signOut, auth } = NextAuth((req) => ({
+  ...authConfig(req),
+  adapter: PrismaAdapter(db) as any,
   session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
-  
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
-        token.id = user.id; 
+        token.id = user.id;
       }
       return token;
     },
@@ -86,4 +90,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     })
   ],
-})
+}))
